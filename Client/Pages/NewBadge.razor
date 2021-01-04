@@ -1,0 +1,68 @@
+@page "/newbadge"
+@using Scout.Shared
+@using Scout.Shared.Models
+@inject HttpClient Http
+
+<EditForm Model="@badge" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        <label>
+            Name:
+        </label>
+        <div>
+            <InputText id="name" @bind-Value="badge.Name" />
+        </div>
+    </p>
+    <p>
+        <label>
+            Image:
+        </label>
+        <div>
+            <InputText id="image" @bind-Value="badge.Image" />
+        </div>
+    </p>
+    <p>
+        <label>
+            Description:
+        </label>
+        <div>
+            <InputText id="description" @bind-Value="badge.Description" />
+        </div>
+    </p>
+    <p>
+        <label>
+            Link:
+        </label>
+        <div>
+            <InputText id="link" @bind-Value="badge.Link" />
+        </div>
+    </p>
+    <p>
+        <label>
+            Age Group From
+        </label>
+        <div>
+            <InputNumber id="ageGroupFrom" @bind-Value="badge.AgeGroupFrom" />
+        </div>
+    </p>
+    <p>
+        <label>
+            Age Group To
+        </label>
+        <div>
+            <InputNumber id="ageGroupTo" @bind-Value="badge.AgeGroupTo" />
+        </div>
+    </p>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private Badge badge = new Badge();
+
+    private async Task HandleValidSubmit()
+    {
+        await Http.PutAsJsonAsync("Badge", badge);
+    }
+}

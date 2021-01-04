@@ -1,0 +1,49 @@
+@page "/scoutdata"
+@using Scout.Shared.Models
+@inject HttpClient Http
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (scouts == null)
+{
+    <p><em>Loading.</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Badges</th>
+                <th>Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var scout in scouts)
+            {
+                <tr>
+                    <td>@scout.Name</td>
+                    <td>
+                        @foreach (Badge badge in scout.Badges)
+                        {
+                            <img src=@badge.Image asp-append-version="true" style="height: 100px;" />
+                        }
+                    </td>
+                    <td>@scout.Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Scoutt> scouts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ServiceResponse<List<Scoutt>> ServiceResponseBadges = await Http.GetFromJsonAsync<ServiceResponse<List<Scoutt>>>("Scoutt");
+        scouts = ServiceResponseBadges.Data;
+    }
+}

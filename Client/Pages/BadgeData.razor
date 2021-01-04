@@ -1,5 +1,4 @@
-@page "/fetchdata"
-@using Scout.Shared
+@page "/badgedata"
 @using Scout.Shared.Models
 @inject HttpClient Http
 
@@ -18,6 +17,10 @@ else
             <tr>
                 <th>Name</th>
                 <th>Image</th>
+                <th>Tags</th>
+                <th>Age</th>
+                <th>Description</th>
+                <th>Link</th>
                 <th>Id</th>
             </tr>
         </thead>
@@ -27,6 +30,10 @@ else
                 <tr>
                     <td>@badge.Name</td>
                     <td><img src=@badge.Image asp-append-version="true" style="height: 100px;" /></td>
+                    <td>@badge.Tags.Aggregate("", (current, next) => current.Length == 0 ? next.Name : current + ", " + next.Name)</td>
+                    <td>@badge.AgeGroupFrom - @badge.AgeGroupTo</td>
+                    <td>@badge.Description</td>
+                    <td>@badge.Link</td>
                     <td>@badge.Id</td>
                 </tr>
             }

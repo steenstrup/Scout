@@ -1,8 +1,6 @@
-﻿using Scout.Shared;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Scout.Server.Services;
 using Scout.Shared.Models;
 
@@ -23,5 +21,12 @@ namespace Scout.Server.Controllers
         {
             return await _badgeService.Get();
         }
+
+        [HttpPut]
+        public async void Put(Badge badge)
+        {
+            _badgeService.Put(badge);
+        }
+
     }
 }
